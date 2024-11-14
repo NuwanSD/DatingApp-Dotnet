@@ -29,7 +29,7 @@ export class NavComponent {
     this.accountService.login(this.model).subscribe({
       next: (_) => {
         this.router.navigateByUrl('/members');
-        console.log(this.model.username);
+        //console.log(this.model.username);
       },
       error: (error) => this.toastr.error(error.error),
     });
