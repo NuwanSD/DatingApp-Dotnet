@@ -26,6 +26,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
         return Ok(users);
     }
 
+
     [HttpGet("{username}")]  //api/users/id
     public async Task<ActionResult<MemberDto>> GetUsers(string username)
     {
@@ -40,7 +41,6 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
     [HttpPut]
     public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
     {
-
 
         var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
 
