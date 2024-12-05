@@ -15,5 +15,4 @@ public interface ILikeRepository
 
     void AddLike(UserLike like);
 
-    Task<bool> SaveChanges();
 }
