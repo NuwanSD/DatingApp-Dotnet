@@ -9,6 +9,8 @@ public interface IUnitOfWork
 
     ILikeRepository LikeRepository { get; }
 
+    IPhotoRepository PhotoRepository { get; }
+
     Task<bool> Complete();
 
     bool HasChanges();

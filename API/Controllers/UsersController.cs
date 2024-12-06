@@ -26,17 +26,29 @@ public class UsersController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoServi
         return Ok(users);
     }
 
-
-    [HttpGet("{username}")]  //api/users/id
-    public async Task<ActionResult<MemberDto>> GetUsers(string username)
+    [HttpGet("{username}")]
+    public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
-        var user = await unitOfWork.UserRepository.GetMemberAsync(username);
+        var currentUsername = User.GetUsername();
+        var user = await unitOfWork.UserRepository.GetMemberAsync(username,
+             isCurrentUser: currentUsername == username);
 
-        if (user == null) return NotFound();
+        if (user == null) return NotFound("User not found");
 
-        return user;
-
+        return Ok(user);
     }
+
+
+    // [HttpGet("{username}")]  //api/users/id
+    // public async Task<ActionResult<MemberDto>> GetUsers(string username)
+    // {
+    //     var user = await unitOfWork.UserRepository.GetMemberAsync(username);
+
+    //     if (user == null) return NotFound();
+
+    //     return user;
+
+    // }
 
     [HttpPut]
     public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
@@ -69,8 +81,6 @@ public class UsersController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoServi
             Url = result.SecureUrl.AbsoluteUri,
             PublicId = result.PublicId
         };
-
-        if (user.Photos.Count == 0) photo.IsMain = true;
 
         user.Photos.Add(photo);
 
